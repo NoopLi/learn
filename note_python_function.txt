@@ -1,0 +1,93 @@
+# python标准库笔记
+
+Built-in Functions(内置函数）
+abs(x)
+# 绝对值函数，参数X可以是整数、浮点数，参数为复数时返回数字大小
+
+all（iterable）
+# 判断可迭代对象是否全部为Ture，等同下列函数
+def all(iterable):
+    for element in iterable:
+        if not element:
+            return False
+        return True
+
+any(iterable)
+# 判断可迭代对象中至少有一个为True,等同下列函数
+def any(iterable):
+    for element in iterable:
+        if element:
+            return True
+        return False
+
+ascii(object)
+# 同repr(),返回object的可打印string,通过repr()中可以用\x,\u或者\U来除去非ASCII字符
+
+bin(x)
+# 将integer数字转换为前缀为’0b'的binary(二进制）string,如果x不为int对象，返回void，可用__index()__
+例如：bin(3)=>'0b11'   bin(-10)=>'-0b1010'
+'0b'前缀使用-format(14,'#b')=>'0b1110'      format(14,'b')=>'1110'
+    或者-f'{14:#b}'=>'0b1110'     f'{14:b}'=>'1110'
+
+class bool([x])
+# 返回一个boolean值（True or False），如果x为False或者省略，返回False，其他的返回True
+
+breakpoint(*args,**kws)
+'''
+此函数会将您置于调用站点的调试器中。具体来说，它呼叫sys.breakpointhook()，传递args和kws直接通过。
+默认情况下，sys.breakpointhook()调用 pdb.set_trace()不需要参数。在这种情况下，它纯粹是一个便利功能，
+因此您无需显式导入 pdb或输入尽可能多的代码即可进入调试器。但是， sys.breakpointhook()可以设置为
+其他一些功能并 breakpoint()自动调用它，允许您进入选择的调试器。
+版本3.7中的新功能。
+'''
+
+class bytearray([source[,encoding[,errors]]])
+# 返回字节数组，bytearray类的值在0-256之间
+# source用法-string必须提供编码--整数则具有该大小并用空字节格式发U---对象只使用可读范围初始化bytearray
+#     迭代对象则必须是范围内可迭代整数，如果没有参数则用0初始化
+
+class bytes([source[,encoding[,errors]]])
+# 返回新的bytes对象，该对象是该范围内不可变的整数序列
+
+callable(object)
+# 判断参数object是否可调用，返回True or False
+
+chr(i)
+# 返回表示Unicode代码为整数i的字符的字符串
+# 例如chr(97)=>'a'
+
+@classmethod
+# 将方法转换为类方法
+# 类方法接受类作为隐式的第一个参数，声明一个类方法如下使用
+class C:
+    @classmethod
+    def f(cls,arg1,arg2,...):...
+
+compile(source,filename,mode,flags=0,dont_inherit=False,optimize=-1)
+#将源代码编译为代码或AST对象
+
+class complex([real[,imag]])
+# 返回值为real+imag*1j的复数----加减号周围不能有空格
+
+delattr(object,name)
+# 删除object中name内容
+# delattr(x.'foobar')==del x.foobar
+
+class dict(**kwarg)
+class dict(mapping,**kwarg)
+class dict(iterable,**kwarg)
+# 创造一个新字典
+
+dir([object])
+# 无参数时返回当前范围的名称列表 使用参数时尝试返回该对象的有效属性列表
+
+divmod(a,b)
+# 将两个数作为参数，并在使用整数除法时返回由商和余数组成的一对数
+# 返回a/b的商 和a/b的余数的一对数组
+
+enumerate(iterable,start=0)
+# 返回一个枚举对象，iterable必须是序列
+
+eval(expression,globals=none，locals=None)
+# 
+
