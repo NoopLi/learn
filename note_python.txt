@@ -74,5 +74,49 @@ set与dict类似，是一组key的组合，但不存储value
 {1,2,3}
 set可以看作是数学意义上的无序和无重复元素的集合，因此可以做数学意义上的并集交集
 
+6、函数的参数
+位置参数
+例如：
+def power(x):
+    return x*x
 
+对于power(x)函数，参数x就是一个位置函数，调用时必须且仅有一个参数x
+默认参数
+def power(x,n=2)
+    s=1
+    while n>0
+        n=n-1
+        s=s*n
+    ruturn s
 
+n=2是默认参数可不填，当n>2是必须明确传入
+设置默认参数时需注意：
+1、必选参数在前，默认参数在后，否则Python解释器会报错
+2、设置默认参数将变化大的参数放前面，变化小的参数放后面，变化小的函数可以作为默认函数
+设置默认函数能降低调用函数的难度
+定义默认参数时必须指向不可变对象
+可变参数
+定义可变参数是在参数前面添加一个*号，在函数内部参数接受的是一个tuple，调用函数时可以传入任意个参数，包括0个函数
+*nums表示把nums这个list或tuple的所有元素作为可变参数传进去
+可变参数允许你传入0个或任意个参数，这些可变参数在函数调用时自动组装为一个tuple
+关键字参数
+关键字参数允许你传入0个或任意个含参数名的参数，这些关键字参数在函数内部自动组装为一个dict
+例如：
+def person(name,age,**kw):
+    print('name',name,'age',age,'other:',kw)
+函数person除了必须参数name和age外，还接受关键字参数kw。在调用该函数时，可以紫川录必选函数
+>>>person('jack',30)
+name:jack age:30 other:{}
+也可以传入任意个数的关键字参数：
+>>>person('Bob',35,city='Beijing')
+name:Bob age:35 other:{'city':'Beijing'}
+关键字参数可以扩展函数的功能，比如在person函数里，我们保证能接收到name和age这2个参数，但是，如果调用者愿意提供更多的参数，我们也能收到
+命名关键字参数
+对于传入的参数可以在函数内部通过kw检查
+命名关键字参数需要一个特殊分隔符*，*后面的参数被视为命名关键字参数
+例如：
+def peison(name,age,*,city,job)
+    print(name,age,city,job)
+调用方式如下
+>>>peison('Jack',24,city='Beijing',job='Engineer')
+Jack 24 Beijing Engineer
