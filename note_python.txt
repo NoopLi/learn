@@ -1,0 +1,60 @@
+# -*- coding:utf-8 -*-
+
+1、格式化字符串的方法
+format()
+例如：>>>'Hello,{0},成绩提升了 {1:.1f}%'.format('小明",17.125)
+'Hello,小明,成绩提升了17,。1%'
+
+2、list（列表）
+访问list用索引，0~len()-1,超出部分会报IndexError
+list追加元素到末尾
+list.append('XXX')
+list插入元素到指定位置,比如索引号为1的位置
+list.insert(1,'XXX')
+删除list末尾的元素，用pop()方法
+例如：list=['1','2','3']
+>>>list.pop()
+'3'
+>>>list
+['1','2']
+删除指定位置元素用pop(i)方法，I为索引位置
+>>>list.pop(2)
+'2'
+>>>list
+['1','3']
+如果要替换list其中指定元素,可以直接复制给对应索引位置
+>>>list[1] = 'S'
+>>>list
+['1','S','3']
+
+3、tuple(元组）
+类似list，但是一旦初始化不可修改，只可提取不可修改
+只有一个元素的tuple定义时必须加逗号
+>>>t=(1,)
+>>>t
+(1,)
+
+4、循环
+for x in range(2,100)
+
+5、dictionary(字典)
+dict的key是不可变对象
+判断dict的key是否存在之一
+>>>'a' in dict
+False
+判断dict的key是否存在之二(返回为空）
+>>>dict.get('a')
+删除一个key，用pop(key)方法，对应的value也会删除
+>>>dict.pop('a')
+b
+
+list与dict特点对比
+dict:1、查找和插入的速度极快，不会随着key的增加的变慢
+ 2、需要占用大量的内存，内存浪费多
+
+list:1、查找和插入的时间随着元素的增加而增加
+ 2、占用空间小，浪费内存很少
+
+5、set
+set与dict类似，是一组key的组合，但不存储value
+要创建
