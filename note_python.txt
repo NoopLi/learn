@@ -120,3 +120,22 @@ def peison(name,age,*,city,job)
 调用方式如下
 >>>peison('Jack',24,city='Beijing',job='Engineer')
 Jack 24 Beijing Engineer
+如果函数定义中已经有一个可变参数，后面的命名参数就不需要一个特殊分隔符*了
+例如：
+def person(name,age,*args,city,job):
+    print(name,age,args,city,job)
+参数组合
+参数顺序必须是：必选参数、默认参数、可变参数、命名关键参数、关键字参数
+对于任意函数，都可以通过func(*args,**kw)的形式调用
+参数小结：
+默认参数一定要用不可变对象，如果是可变对象，程序运行时会有逻辑错误
+要注意定义可变参数和关键字参数的语法：
+*args是可变参数，args接收的是一个tuple;
+**kw是关键字参数，kw接受的是一个dict
+调用函数时如何传入可变参数和关键字参数的语法：
+可变参数暨可以直接传入：func(1,2,3),又可以先组装list或tuple,在通过*args传入：func(*(1,2,3))
+关键字参数既可以直接传入：func(a=1,b=2),又可以先组装dict,在通过**kw传入：func(**{'a':1,'b':2})
+使用*args和**kw是Python的习惯写法，最好使用
+命名的关键字参数时为了限制调用者可以传入的参数名，同时可以提供默认值
+定义命名的关键字参数在没有可变参数的情况下不要忘了*，否则定义的是位置参数
+
