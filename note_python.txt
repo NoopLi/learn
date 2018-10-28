@@ -218,3 +218,5 @@ Iterator对象可以被next()函数调用并不断返回下一个数据，
 直到没有数据时抛出StopIteration错误
 
 12、高阶函数map/reduce
+map
+map（）函数接收2个参数，一个是函数，一个是Iterable,
