@@ -1,0 +1,222 @@
+scrapy命令行
+
+startproject
+语法：scrapy startproject <project_name>
+不需要项目执行
+解释：在 project_name 文件夹下创建一个名为 project_name 的Scrapy项目
+
+genspider
+语法： scrapy genspider [-t template] <name> <domain>
+需要项目执行
+解释：在当前项目中创建spider，该方法可以快捷创建模板spider，也可以自己创建spider源码
+$ scrapy genspider -l
+Available templates:
+	basic
+	crawl
+	csvfeed
+	xmlfeed
+解释：创建spider，-l列出模板类型，下面4个模板类型
+$ scrapy genspider -d basic:
+解释：创建basic类型模板
+spider源码示例如下：
+import scrapy
+
+class $classname(scrapy.Spider):
+	name = "$name"
+	allowed_domains = ["$domain"]
+	start_urls = (
+		'http://www.$domain/',   #爬取网址
+		)
+	def parse(self,response):
+		pass
+
+完整版实例：		
+$ scrapy genspider -t basic example example.com
+Created spider 'example' using template 'basic' in module:
+  mybot.spiders.example
+
+crawl
+语法：scrapy crawl <spider>
+需要项目执行
+解释：使用编写好的spider进行爬取
+示例：
+$ scrapy crawl myspider
+[...myspider start crawling ...]
+
+check
+语法：scrapy check [-l] <spider>
+需要项目执行
+解释：运行contract检查，对spider内容进行检查
+
+list
+语法：scrapy list 
+需要项目执行
+解释：列出项目中所有可用的spider，每行输出一个spider
+示例：
+$ scrapy list 
+ spider1
+ spider2
+ 
+ 
+edit
+语法： scrapy edit <spider>
+需要项目执行
+解释：使用editor中设置的编辑器编辑给定的spider
+
+fecth
+语法：scrapy fetch <url>
+不需要项目执行
+解释：使用Scrapy下载器（downloader)下载给定的url,并将获取的内容送到标准输出。
+
+view
+语法：scrapy view <url>
+不需要项目执行
+在浏览器中打开给定的URL，并以Scrapy spider获取到的形式展现。 有些时候spider获取到的页面
+和普通用户看到的并不相同。 因此该命令可以用来检查spider所获取到的页面，并确认这是您所期望的。
+
+示例：
+$ scrapy view http://www.example.com/some/page.html
+[...browser starts ...]
+
+shell
+语法： scrapy shell [url]
+不需要项目执行
+解释：以给定的URL(如果给出)或者空(没有给出URL)启动Scrapy shell。 查看 Scrapy终端(Scrapy shell) 获取更多信息。
+
+parse
+语法：scrapy parse <url> [options]
+需要项目执行
+解释：获取给定的URL并使用相应的spider分析处理。如果您提供 --callback 选项，则使用spider的该方法处理，否则使用 parse
+支持选项：
+--spider=SPIDER ：跳过自动检测spider并轻质使用特定的spider
+--a NAME=VALUE:设置spider的参数（可能被重复）
+--callback OR -c :spider中用于解析返回（response）的回调函数
+--pipelines :在pipline中处理item
+--rules OR -r :使用CrawlSpider规则来发现用来解析返回（response）的回调函数
+--noitems :不显示爬去到的item
+--nolinks :不显示提取的链接
+--nocolour : 避免使用pygments对输出着色
+--depth OR -d :指定跟进链接请求的层次感（默认：1)
+--verbose OR -v ：显示每个请求的详细信息
+
+settings
+语法：scrapy settings [options]
+不需要项目执行
+解释：获取Scrapy的设定，在项目中运行时，该命令将会输出项目的设定值，否则输出Scrapy默认设定。
+示例：
+$ scrapy settings --get BOT_NAME
+scrapybot
+$ scrapy settings --get DOWNLOAD_DELAY
+
+runspider
+语法：scrapy runspider <spider_file.py>
+不需要项目执行
+解释：在未创建项目的情况下，运行一个编写在Python文件中的spider。
+示例：
+$ scrapy runspider myspider.py
+[...spider strats crawling ...]
+
+veision
+语法：scrapy version [-v]
+不需要项目执行
+解释：输出Scrapy版本。配合 -v 运行时，该命令同时输出Python, Twisted以及平台的信息，方便bug提交。
+
+
+bench
+语法：scrapy bench
+不需要项目执行
+解释：运行benchmark测试
+
+
+spider类
+
+class scrapy.spiders.Spider
+
+name
+定义spider名字的字符串（string）
+allowed_domains
+可选，包含spider允许爬取的域名（domain）列表（list)。当offsiteMiddleware启用时，域名不在列表中的url不会被跟进
+start_urls
+url列表。当没有制定特定的url时，spider将从该列表中开始进行爬取。因此，第一个被获取的页面的url将是该列表之一
+后续的url将会从获取的数据中提取
+custom_settings
+该设置是一个dict，当启动spider时，该设置会覆盖项目级的设置，由于设置必须在初始化（instantition)前被更新，所以该属性必须被定义为class属性
+crawler
+该属性在初始化class后由类方法from_crawler()设置，并且链接了本spider实例对应的Crawler对象
+settings
+运行此蜘蛛的配置
+logger
+使用Spider船舰的Python记录器name。可以用来发送日志
+from_crawler(crawler,*args,**kwargs)
+这是Scrapy用于创建蜘蛛的类方法
+	参数：crawler（Crawler instance）-蜘蛛绑定到的爬虫
+		args(list)-传递__init__()方法 的关键字参数
+		
+strt_requests()
+该方法必须返回一个可迭代对象。该对象包含了spider用于爬取的第一个请求
+当spider启动爬取并且未制定url时，该方法被调用。当指定了url时，make_requests_from_url()将被调用来创建请求对象。该方法仅仅会被Scrapy调用一次，因此可将其实现为生成器
+默认实现使用start_urls的url生成请求，如果想修改最初爬取网站的请求对象，可以重写该方法
+make_requests_from_url(url)
+该方法接受一个url并返回用于爬取的Request对象。该方法在start_requests()初始化请求时被调用，也被用于转化url请求。
+默认未被复写（overridden)的情况下，该方法返回的请求对象中，parse()作为回调函数，dont_filter参数被设置为开启
+parse(response)
+当response没有指定回调函数时，该方法时Scrapy处理下载的response的默认方法
+	parse负责处理response并返回处理的数据以及跟进的url
+	spider对其他的Response的回调函数也有相同的要求
+	该方法及其他的Request回调函数必须返回一个包含Request、dict或Iterm的可迭代对象
+		参数：response（Response）-用于分析的response
+log(message[,level,component])
+使用scrapy.log.msg()方法记录（log)message。log中自动带上该spider的name属性
+closed(reason)
+当spider关闭时，该函数被调用。该方法提供了一个替代调用signals.connect()监听spider_closed信号的快捷方式
+
+
+spider arguments
+
+
+generic Spiders
+
+CrawlSpider
+class scrapy.spiders.CrawlSpider ，爬取一般网站常用的spider，其定义的一些规则来提供跟进link的方便机制
+除从spider继承过来的属性外，还提供了一个新的属性
+	rules-一个包含一个或者多个的Rules对象的集合（list)。每个Rule对爬取网站的动作定义了特定表现。
+	parse_start_url(response)-当start_url的请求返回时，该方法被调用。该方法分析最初的返回值必须返回一个Item对象或者一个Requesr对象或者一个可迭代的包含二者对象
+	
+爬取规则（Crawling rules)
+class scrapy.spiders.Rule(link_ectracor,callback=None,cb_kwargs=None,follow=None,process_links=None,process_request=None)
+	link_extractor是一个Link Extractor对象。其定义了如何从爬取到的页面提取链接
+	callback是一个callable的string。从link_extractor中每获取到链接将会调用该函数。该函数接受一个response作为其第一个参数，并返回一个包含Item以及Request对象的列表LIst
+		警告：编写爬虫规则时避免使用parse作为回调函数。由于CrawSpider使用parse方法来实现其逻辑，如果覆盖parse方法，crawl spider将会运行失败
+	cb_kwargs包含传递回调函数的参数的dict
+	follow是一个Boolean值，指定了根据该规则从response提取的链接是否需要跟进。如果callback为None,follow默认设置为True，否者默认为False
+	process_links是一个可调用的string
+	process_request时一个可调用string，该规则提取每个request时都会调用该函数。该函数必须返回一个request或者None
+	
+CrawlSpider样例
+
+import scrapy
+from scrapy.spiders import CrawlSpider,Rule
+from scrapy.linkextractors import LinkExtractor
+
+class MySpider(CrawlSpider):
+	name = 'example.com'
+	allowed_domains = ['example.com']
+	start_urls = ['http://www.example.com']
+	
+	rules=(
+		#提取匹配'category。php'的链接并跟进链接
+		Rules(LinkExtractor(allow=('item\.php',),deny=('subsection\.php',))),
+		
+		#提取匹配'item.php'的链接并使用spider的parse_item方法进行分析
+		Rule(LinkExtractor(allow=('item\.php',)),callback='parse_item'),
+	)
+	
+	def parse_item(self,response):
+		self.logger.info('Hi,this is an item page! %s',response.url)
+		
+		item = scrapy.Item()
+		item['id'] = response.xpath('//td[@id="item_id"]/text()').re(r'ID:(\d+)')
+		item['name'] = response.xpath('//td[@id="item_name"]/text()').extract()
+		item['description'] = response.xpath('//td[@id="item_description"]/text()').extract()
+		return item
+		

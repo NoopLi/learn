@@ -1,4 +1,5 @@
-# -*- coding:utf-8 -*-
+﻿# -*- coding:utf-8 -*-
+
 
 1、格式化字符串的方法
 format()
@@ -219,4 +220,43 @@ Iterator对象可以被next()函数调用并不断返回下一个数据，
 
 12、高阶函数map/reduce
 map
-map（）函数接收2个参数，一个是函数，一个是Iterable,
+map（）函数接收2个参数，一个是函数，一个是Iterable,map将传入的函数依次作用到序列的每个元素，并把结果作为新的Iterator返回
+reduce
+reduce把一个函数作用在一个序列[x1, x2, x3, ...]上，这个函数必须接收两个参数，reduce把结果继续和序列的下一个元素做累积计算
+filter
+filter()把传入的函数依次作用于每个元素，然后根据返回值是True还是False决定保留还是丢弃该元素。
+注意到filter()函数返回的是一个Iterator，也就是一个惰性序列，所以要强迫filter()完成计算结果，
+需要用list()函数获得所有结果并返回list。
+sorted
+Python内置的sorted()函数就可以对list进行排序,可以接收一个key函数来实现自定义的排序
+key指定的函数作用到每个元素上，并根据key函数返回值排序，
+进行反序排序只需要传入第三个参数reverse=True
+
+13、匿名函数
+关键字lambda表示匿名函数，冒号前面的x表示函数参数，匿名函数有个限制就是只能更有一个表达式，不能写return，返回值就是函数结果
+匿名函数有个好处，因为函数没有名字，不必担心函数名冲突。此外，匿名函数也是一个函数对象，也可以把匿名函数赋值给一个变量，
+再利用变量来调用该函数：
+
+14、Decorator（装饰器）
+在代码运行期间动态增加功能的方式叫做装饰器
+把@log放到now()函数的定义处，相当于执行了语句
+now = log(now)
+在面向对象（OOP）的设计模式中，decorator被称为装饰模式。OOP的装饰模式需要通过继承和组合来实现，
+而Python除了能支持OOP的decorator外，直接从语法层次支持decorator。Python的decorator可以用函数实现，也可以用类实现。
+decorator可以增强函数的功能，定义起来虽然有点复杂，但使用起来非常灵活和方便。
+
+15、Partial function(偏函数）
+functools.partial的作用就是，把一个函数的某些参数给固定住（也就是设置默认值），返回一个新的函数，调用这个新函数会更简单。
+
+16、类与实例
+class（类）后面紧接着是类名，类名通常是大写开头的单词
+创建实例是通过类名+（）实现的
+由于类可以起到模板的作用，因此，可以在创建实例的时候，把一些我们认为必须绑定的属性强制填写进去。通过定义一个特殊的__init__方法，
+在创建实例的时候，就把name，score等属性绑上去：
+calss Studengt(object):
+
+	def __init__(self,name,score):
+		self.name = name
+		self.score = score
+
+

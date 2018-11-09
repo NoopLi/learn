@@ -1,6 +1,11 @@
-notepad++ 运行python代码
+﻿notepad++ 运行python代码
 cmd /c c:\anaconda\python.exe "$(FULL_CURRENT_PATH)" & PAUSE
 
+HTML
+class类自上而下，后面高于前面
+id高于class
+内联样式覆盖所有CSS申明
+！important可以100%确定使用
 Python参数总结
 Python的函数具有非常灵活的参数形态，既可以实现简单的调用，又可以传入非常复杂的参数。
 默认参数一定要用不可变对象，如果是可变对象，程序运行时会有逻辑错误！
