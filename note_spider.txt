@@ -85,3 +85,43 @@ requests.delete(url,**kwargs)
 
 robots协议含义
 *代表所有，/代表根目录
+
+Robots协议的使用
+网络爬虫：自动
+
+爬取图片全代码(二进制数据均可）
+import requests
+import os
+url = "http://example.com/abcd.jpg"
+root = "D://pics//"
+path = root +url.split('/')[-1]
+try:
+	if not os.path.exists(root):
+		os.madir(root)		# 创建根目录
+	if not os.path.exits(path):
+		r = request.get(rul) # 创建爬取链接
+		with open(path,'wb') as f:
+		f.close()
+		print("文件保存成功“)
+	else:
+		print("文件已存在“)
+except:
+	print(“爬取失败”)
+	
+IP地址查询全代码
+import requests
+url = "http://m.ip138.com/ip.asp?ip="
+try:
+	r = requests.get(url+'202.204.80.112')
+	r.raise_for_status()
+	r.encoding = r.apparent_encoding
+	print(r.text[-500:])
+except:
+	print("爬取失败")
+
+Beautiful Soup
+
+from bs4 import BeautifulSoup
+soup = BeautifulSoup('<p>data</p>','html.parser')
+
+BeautifulSoup基本元素
